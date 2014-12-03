@@ -4,15 +4,22 @@ require 'time'
 class RubyVersionReader
   VERSION = '0.1.0'
 
-  attr_accessor :path
+  attr_accessor :path, :environment_manager
 
-  def initialize(given_path)
+  def initialize(given_path, given_environment_manager = 'rvm')
     given_path = './' if given_path.empty?
     @path = File.expand_path(given_path)
+
+    @environment_manager = given_environment_manager
   end
 
   def to_s
-    read_ruby_version_file
+    return @to_s if @to_s
+
+    @to_s = "#{engine}-#{full_version}"
+    @to_s += "@#{gemset}" unless gemset.empty?
+
+    @to_s
   end
   alias inspect to_s
 
@@ -73,11 +80,11 @@ class RubyVersionReader
 
   # accessors
   def engine
-    @engine ||= extract_engine_from_string(to_s)
+    @engine ||= extract_engine_from_string(read_ruby_version_file)
   end
 
   def full_version
-    @full_version ||= extract_full_version_from_string(to_s)
+    @full_version ||= extract_full_version_from_string(read_ruby_version_file)
   end
 
   def major
@@ -111,11 +118,13 @@ class RubyVersionReader
   end
 
   def read_ruby_version_file
-    read_and_strip(File.join(path, '.ruby-version'))
+    version_path = File.join(path, '.ruby-version')
+    File.exists?(version_path) ? read_and_strip(version_path) : ''
   end
 
   def read_ruby_gemset_file
-    read_and_strip(File.join(path, '.ruby-gemset'))
+    gemset_path = File.join(path, '.ruby-gemset')
+    File.exists?(gemset_path) ? read_and_strip(gemset_path) : ''
   end
 
   def read_and_strip(file_path)
