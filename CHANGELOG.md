@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.1.1 - Unreleased
+## 0.1.1 - 2014-12-03
 ### Added
 - Ability to initialize a RubyVersionReader with no arguments (like the README says you can)
 
