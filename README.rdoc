@@ -1,0 +1,49 @@
+= RubyVersionReader
+
+Provides a +RubyVersionReader+ to simplify reading of +.ruby-version+ and +.ruby-gemset+ files in your programs.
+
+== Setup
+
+On your command-line:
+
+    $ gem install ruby_version_reader
+
+In Ruby:
+
+    require 'ruby_version_reader'
+
+== Usage
+
+    # Initialize your reader
+    reader = RubyVersionReader.new
+
+    # The current base path where .ruby-version files are being looked for
+    reader.path
+
+    # Output .ruby-version
+    reader.to_s #=> 'ruby-1.8.7-p249'
+
+    # Check for the main version with a Float
+    reader.is? 2.1
+
+    # Use strings for exacter checking
+    reader.is.above '1.9.2-p330'
+    reader.is.at_least '2.0.0' # or exactly, below, at_most
+
+    # You can use the common comparison operators
+    reader >= '1.8.7'
+    reader.between? '1.8.7', '1.9.2'
+
+    # Misc Accessors
+    reader.engine #=> 'ruby'
+    reader.full_version #=> '1.8.7-p249'
+    reader.major # => 1
+    reader.minor # => 8
+    reader.tiny  # => 7
+    reader.patchlevel # => 249
+
+== Credit
+
+Basic RubyVersionReader comparison logic from https://github.com/janlelis/ruby_version which originated from the zucker gem.
+
+Copyright (c) 2014 Marcos Wright-Kuhns. MIT License.
