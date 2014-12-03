@@ -2,7 +2,7 @@ require 'date'
 require 'time'
 
 class RubyVersionReader
-  VERSION = '0.1.0'
+  VERSION = '0.1.1'
 
   attr_accessor :path, :environment_manager
 
@@ -30,7 +30,7 @@ class RubyVersionReader
   def environment_manager_load_string
     case environment_manager
     when 'rvm'
-      "rvm use #{to_s}"
+      "rvm #{to_s} do"
     when 'rbenv'
       "RBENV_VERSION=#{to_s}"
     when 'chruby'
