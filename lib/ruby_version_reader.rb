@@ -1,12 +1,12 @@
 require 'date'
 require 'time'
 
-module RubyVersionReader
+class RubyVersionReader
   VERSION = '0.1.0'
 
   attr_accessor :path
 
-  def initalize(given_path)
+  def initialize(given_path)
     given_path = './' if given_path.empty?
     @path = File.expand_path(given_path)
   end
@@ -102,12 +102,12 @@ module RubyVersionReader
   private
 
   def extract_engine_from_string(value)
-    value = value.gsub(extract_full_version_from_string(value), '')
-    value.empty? : 'ruby' : value
+    value = value.gsub(/\-?#{Regexp.escape(extract_full_version_from_string(value))}/, '')
+    value.empty? ? 'ruby' : value
   end
 
   def extract_full_version_from_string(value)
-    value.gsub(/\A(\D+\-p?)?/, '').to_i
+    value.gsub(/\A(\D+\-p?)?/, '')
   end
 
   def read_ruby_version_file
