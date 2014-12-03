@@ -27,6 +27,19 @@ class RubyVersionReader
     read_ruby_gemset_file
   end
 
+  def environment_manager_load_string
+    case environment_manager
+    when 'rvm'
+      "rvm use #{to_s}"
+    when 'rbenv'
+      "RBENV_VERSION=#{to_s}"
+    when 'chruby'
+      "chruby-exec #{to_s} --"
+    else
+      raise "Unsupported environment_manager: #{environment_manager.inspect}"
+    end
+  end
+
   # comparable
   def <=>(other)
     value = case other
