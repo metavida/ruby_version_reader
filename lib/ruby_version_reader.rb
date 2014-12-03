@@ -6,10 +6,8 @@ class RubyVersionReader
 
   attr_accessor :path, :environment_manager
 
-  def initialize(given_path, given_environment_manager = 'rvm')
-    given_path = './' if given_path.empty?
+  def initialize(given_path = './', given_environment_manager = 'rvm')
     @path = File.expand_path(given_path)
-
     @environment_manager = given_environment_manager
   end
 

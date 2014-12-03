@@ -1,8 +1,12 @@
 # Change Log
 
 ## 0.1.1 - Unreleased
-### Added, Deprecated, Removed
+### Added
+- Ability to initialize a RubyVersionReader with no arguments (like the README says you can)
+
+### Deprecated, Removed
 - Nothing
+
 ### Fixed
 - Fixed `#environment_manager_load_string` for RVM
 
