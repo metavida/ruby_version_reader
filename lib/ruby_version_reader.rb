@@ -4,11 +4,15 @@ require 'time'
 class RubyVersionReader
   VERSION = '0.1.1'
 
-  attr_accessor :path, :environment_manager
+  attr_accessor :path, :environment_manager, :options
 
-  def initialize(given_path = './', given_environment_manager = 'rvm')
+  # Available options:
+  # *:rvm_path: The path to the rvm executable (used if given_environment_manager == 'rvm'). Default: nil.
+  def initialize(given_path = './', given_environment_manager = 'rvm', given_options = {})
     @path = File.expand_path(given_path)
     @environment_manager = given_environment_manager
+    @options = {}
+    @options[:rvm_path] = given_options[:rvm_path].to_s
   end
 
   def to_s
@@ -28,7 +32,7 @@ class RubyVersionReader
   def environment_manager_load_string
     case environment_manager
     when 'rvm'
-      "rvm #{to_s} do"
+      "#{options[:rvm_path].empty? ? 'rvm' : options[:rvm_path]} #{to_s} do"
     when 'rbenv'
       "RBENV_VERSION=#{to_s}"
     when 'chruby'
