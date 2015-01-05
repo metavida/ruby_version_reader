@@ -1,6 +1,6 @@
 # Change Log
 
-## 0.2.0 - Unreleased
+## 0.2.0 - 2015-01-05
 ### Added
 - Allow `:rvm_path` option in RubyVersionReader initialize
 
